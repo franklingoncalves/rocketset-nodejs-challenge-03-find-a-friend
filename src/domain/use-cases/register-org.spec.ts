@@ -27,6 +27,9 @@ describe('Register Org Use Case', () => {
 
         expect(org.id).toEqual(expect.any(String))
         expect(orgsRepository.items).toHaveLength(1)
+
+        expect(org.address).toEqual('Rua Teste')
+        expect(org.whatsapp).toEqual('999999999')
     })
 
     it('should hash org password upon registration', async () => {
