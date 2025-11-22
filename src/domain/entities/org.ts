@@ -7,8 +7,8 @@ export interface OrgProps {
     address: string
     city: string
     whatsapp: string
-    latitude: number  // <--- Novo
-    longitude: number // <--- Novo
+    latitude: number
+    longitude: number
 }
 
 export class Org {
