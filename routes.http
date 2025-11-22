@@ -1,0 +1,68 @@
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.token}}
+@createdPetId = {{create_pet.response.body.pet.id}}
+
+# ==========================================
+# 🏢 Organizações (ORGs)
+# ==========================================
+
+### Cadastrar uma nova ORG
+# @name create_org
+POST {{baseUrl}}/orgs
+Content-Type: application/json
+
+{
+  "name": "Cão Feliz RJ",
+  "email": "contato@caofeliz.com",
+  "password": "123456",
+  "address": "Av. Atlântica, 400",
+  "city": "Rio de Janeiro",
+  "whatsapp": "21988888888",
+  "latitude": -22.906847,
+  "longitude": -43.172896
+}
+
+### Autenticar (Login)
+# @name authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "email": "contato@caofeliz.com",
+  "password": "123456"
+}
+
+# ==========================================
+# 🐶 Pets
+# ==========================================
+
+### Cadastrar um novo Pet (Precisa de Token)
+# @name create_pet
+POST {{baseUrl}}/orgs/pets
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Thor",
+  "description": "Pastor Alemão protetor",
+  "age": "adult",
+  "size": "large",
+  "energyLevel": "high",
+  "independencyLevel": "medium",
+  "environment": "spacious",
+  "photos": [
+    "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95"
+  ]
+}
+
+### Listar Pets por Cidade
+GET {{baseUrl}}/pets?city=Rio de Janeiro
+Content-Type: application/json
+
+### Filtrar Pets (Cidade + Características)
+GET {{baseUrl}}/pets?city=Rio de Janeiro&age=adult&energyLevel=high
+Content-Type: application/json
+
+### Ver Detalhes do Pet (Pega ID criado acima)
+GET {{baseUrl}}/pets/{{createdPetId}}
+Content-Type: application/json
