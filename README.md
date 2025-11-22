@@ -16,7 +16,7 @@ REST API for a pet adoption system, built with Node.js, Fastify, and TypeScript.
 
 ### Functional Requirements (FRs)
 
-- [ ] It must be possible to register a pet.
+- [x] It must be possible to register a pet.
 - [ ] It must be possible to list all available pets for adoption in a specific city.
 - [ ] It must be possible to filter pets by their characteristics (age, size, energy level, independence level, environment).
 - [ ] It must be possible to view details of a specific pet.
