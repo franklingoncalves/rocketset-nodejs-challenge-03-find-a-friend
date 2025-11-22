@@ -1,0 +1,28 @@
+{
+  "name": "rocketset-nodejs-challenge-03-find-a-friend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franklingoncalves/rocketset-nodejs-challenge-03-find-a-friend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/franklingoncalves/rocketset-nodejs-challenge-03-find-a-friend/issues"
+  },
+  "homepage": "https://github.com/franklingoncalves/rocketset-nodejs-challenge-03-find-a-friend#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
+}
