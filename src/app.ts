@@ -1,7 +1,10 @@
 import fastify from 'fastify'
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUi from '@fastify/swagger-ui'
 import {
     serializerCompiler,
     validatorCompiler,
+    jsonSchemaTransform,
     ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { errorHandler } from './infra/http/error-handler'
@@ -11,6 +14,30 @@ export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.register(fastifySwagger, {
+    openapi: {
+        info: {
+            title: 'Find a Friend API',
+            description: 'API for pet adoption management.',
+            version: '1.0.0',
+        },
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
+    },
+    transform: jsonSchemaTransform,
+})
+
+app.register(fastifySwaggerUi, {
+    routePrefix: '/docs',
+})
 
 app.register(orgsRoutes)
 

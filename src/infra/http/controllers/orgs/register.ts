@@ -3,22 +3,18 @@ import { z } from 'zod'
 import { OrgAlreadyExistsError } from '@/core/errors/org-already-exists-error'
 import { makeRegisterOrgUseCase } from '@/infra/http/factories/make-register-org-use-case'
 
-export async function register(request: FastifyRequest, reply: FastifyReply) {
-    const registerBodySchema = z.object({
-        name: z.string(),
-        email: z.string().email(),
-        password: z.string().min(6),
-        address: z.string(),
-        city: z.string(),
-        whatsapp: z.string(),
-        latitude: z.number().refine((value) => {
-            return Math.abs(value) <= 90
-        }),
-        longitude: z.number().refine((value) => {
-            return Math.abs(value) <= 180
-        }),
-    })
+export const registerBodySchema = z.object({
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string().min(6),
+    address: z.string(),
+    city: z.string(),
+    whatsapp: z.string(),
+    latitude: z.number(),
+    longitude: z.number(),
+})
 
+export async function register(request: FastifyRequest, reply: FastifyReply) {
     const { name, email, password, address, city, whatsapp, latitude, longitude } =
         registerBodySchema.parse(request.body)
 
@@ -39,7 +35,6 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
         if (err instanceof OrgAlreadyExistsError) {
             return reply.status(409).send({ message: err.message })
         }
-
         throw err
     }
 
