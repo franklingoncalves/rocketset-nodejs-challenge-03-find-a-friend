@@ -1,7 +1,8 @@
+import { PrismaOrgsRepository } from '@/infra/database/prisma/repositories/prisma-orgs-repository'
 import { RegisterOrgUseCase } from '@/domain/use-cases/register-org'
-import { orgsRepository } from '@/lib/in-memory-db'
 
 export function makeRegisterOrgUseCase() {
+    const orgsRepository = new PrismaOrgsRepository()
     const registerOrgUseCase = new RegisterOrgUseCase(orgsRepository)
 
     return registerOrgUseCase
