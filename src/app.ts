@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import fastifyJwt from '@fastify/jwt'
 import {
     serializerCompiler,
     validatorCompiler,
@@ -9,6 +10,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { errorHandler } from './infra/http/error-handler'
 import { orgsRoutes } from './infra/http/controllers/orgs/routes'
+import { env } from './infra/env'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -37,6 +39,13 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
     routePrefix: '/docs',
+})
+
+app.register(fastifyJwt, {
+    secret: env.JWT_SECRET,
+    sign: {
+        expiresIn: '10m',
+    },
 })
 
 app.register(orgsRoutes)
