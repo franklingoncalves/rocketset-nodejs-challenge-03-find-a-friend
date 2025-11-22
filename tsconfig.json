@@ -5,7 +5,9 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -15,5 +17,8 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src", "test"] // Assumindo que testes podem ficar em pasta separada ou dentro de src
+  "include": [
+    "src",
+    "test"
+  ]
 }
