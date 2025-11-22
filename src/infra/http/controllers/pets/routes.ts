@@ -5,6 +5,20 @@ import { verifyJwt } from '@/infra/http/middlewares/verify-jwt'
 import { create, createPetBodySchema } from './create'
 import { search, searchPetsQuerySchema } from './search'
 import { getPetProfileParamsSchema, getProfile } from './get-profile'
+import { PetAge, PetEnergyLevel, PetEnvironment, PetIndependencyLevel, PetSize } from '@/domain/entities/pet'
+
+const petResponseSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string(),
+    description: z.string().nullable().optional(),
+    age: z.nativeEnum(PetAge),
+    size: z.nativeEnum(PetSize),
+    energyLevel: z.nativeEnum(PetEnergyLevel),
+    independencyLevel: z.nativeEnum(PetIndependencyLevel),
+    environment: z.nativeEnum(PetEnvironment),
+    photos: z.array(z.string()),
+    orgId: z.string(),
+})
 
 export async function petsRoutes(app: FastifyInstance) {
     const appWithTypeProvider = app.withTypeProvider<ZodTypeProvider>()
@@ -20,7 +34,7 @@ export async function petsRoutes(app: FastifyInstance) {
                 body: createPetBodySchema,
                 response: {
                     201: z.object({
-                        pet: z.object({ id: z.string() }).passthrough()
+                        pet: petResponseSchema,
                     }),
                 },
             },

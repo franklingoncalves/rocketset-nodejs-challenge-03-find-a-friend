@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeFetchPetsByCityUseCase } from '@/infra/http/factories/make-fetch-pets-by-city-use-case'
 import { PetAge, PetEnergyLevel, PetEnvironment, PetIndependencyLevel, PetSize } from '@/domain/entities/pet'
+import { PetPresenter } from '@/infra/http/presenters/pet-presenter'
 
 export const searchPetsQuerySchema = z.object({
     city: z.string(),
@@ -19,5 +20,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
 
     const { pets } = await fetchPetsByCityUseCase.execute(query)
 
-    return reply.status(200).send({ pets })
+    return reply.status(200).send({
+        pets: pets.map(PetPresenter.toHTTP),
+    })
 }

@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeGetPetProfileUseCase } from '@/infra/http/factories/make-get-pet-profile-use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
+import { PetPresenter } from '@/infra/http/presenters/pet-presenter'
 
 export const getPetProfileParamsSchema = z.object({
     id: z.string().uuid(),
@@ -15,7 +16,9 @@ export async function getProfile(request: FastifyRequest, reply: FastifyReply) {
 
         const { pet } = await getPetProfileUseCase.execute({ petId: id })
 
-        return reply.status(200).send({ pet })
+        return reply.status(200).send({
+            pet: PetPresenter.toHTTP(pet)
+        })
     } catch (err) {
         if (err instanceof ResourceNotFoundError) {
             return reply.status(404).send({ message: err.message })
