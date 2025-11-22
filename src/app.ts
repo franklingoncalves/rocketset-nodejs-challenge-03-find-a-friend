@@ -8,9 +8,10 @@ import {
     jsonSchemaTransform,
     ZodTypeProvider,
 } from 'fastify-type-provider-zod'
+import { env } from './infra/env'
 import { errorHandler } from './infra/http/error-handler'
 import { orgsRoutes } from './infra/http/controllers/orgs/routes'
-import { env } from './infra/env'
+import { petsRoutes } from './infra/http/controllers/pets/routes'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -49,5 +50,6 @@ app.register(fastifyJwt, {
 })
 
 app.register(orgsRoutes)
+app.register(petsRoutes)
 
 app.setErrorHandler(errorHandler)
